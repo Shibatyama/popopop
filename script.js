@@ -38,39 +38,15 @@ function drawFortune() {
   addStars(5); // 星を5個ランダムに追加
 }
 
-function randomPick(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function getZodiac(date) {
-  const m = date.getMonth() + 1;
-  const d = date.getDate();
-  if ((m===3 && d>=21) || (m===4 && d<=19)) return "牡羊座";
-  if ((m===4 && d>=20) || (m===5 && d<=20)) return "牡牛座";
-  if ((m===5 && d>=21) || (m===6 && d<=21)) return "双子座";
-  if ((m===6 && d>=22) || (m===7 && d<=22)) return "蟹座";
-  if ((m===7 && d>=23) || (m===8 && d<=22)) return "獅子座";
-  if ((m===8 && d>=23) || (m===9 && d<=22)) return "乙女座";
-  if ((m===9 && d>=23) || (m===10 && d<=23)) return "天秤座";
-  if ((m===10 && d>=24) || (m===11 && d<=22)) return "蠍座";
-  if ((m===11 && d>=23) || (m===12 && d<=21)) return "射手座";
-  if ((m===12 && d>=22) || (m===1 && d<=19)) return "山羊座";
-  if ((m===1 && d>=20) || (m===2 && d<=18)) return "水瓶座";
-  return "魚座";
-}
-
-// 星アニメ追加
 function addStars(count) {
   const card = document.querySelector(".card");
   for (let i=0; i<count; i++) {
     const star = document.createElement("div");
     star.textContent = "⭐";
-    star.style.position = "absolute";
+    star.classList.add("star");
     star.style.left = `${Math.random()*90}%`;
     star.style.top = `${Math.random()*90}%`;
     star.style.fontSize = `${10 + Math.random()*20}px`;
-    star.style.opacity = 0;
-    star.style.transition = "all 1s ease-out";
     card.appendChild(star);
 
     setTimeout(() => { 
@@ -81,3 +57,37 @@ function addStars(count) {
     setTimeout(() => { card.removeChild(star); }, 1500);
   }
 }
+
+// 背景に流れる星
+function createBackgroundStars(num=100) {
+  for (let i=0; i<num; i++) {
+    const star = document.createElement("div");
+    star.textContent = "⭐";
+    star.classList.add("star");
+    star.style.left = `${Math.random()*100}%`;
+    star.style.top = `${Math.random()*100}%`;
+    star.style.fontSize = `${5 + Math.random()*8}px`;
+    star.style.opacity = Math.random();
+    document.body.appendChild(star);
+
+    animateStar(star);
+  }
+}
+
+function animateStar(star) {
+  const duration = 5000 + Math.random()*5000;
+  const startTop = parseFloat(star.style.top);
+  const endTop = -5;
+
+  star.animate([
+    { transform: `translateY(0px)` },
+    { transform: `translateY(-${startTop + 10}vh)` }
+  ], {
+    duration: duration,
+    iterations: Infinity,
+    easing: 'linear'
+  });
+}
+
+// 初回呼び出し
+createBackgroundStars(80);
