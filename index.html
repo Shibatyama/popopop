@@ -1,148 +1,57 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>星座占い｜今日の運勢</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: linear-gradient(135deg, #84fab0, #8fd3f4);
-      text-align: center;
-      padding-top: 50px;
+<script>
+  const fortunes = {
+    "牡羊座": ["勢いのある一日！挑戦が吉。", "🔥 赤いもの"],
+    "牡牛座": ["安定がカギ。無理しないで。", "🍰 甘いもの"],
+    "双子座": ["会話が運を運ぶ日。", "📱 スマホ"],
+    "蟹座": ["身近な人を大切に。", "🏠 家の鍵"],
+    "獅子座": ["主役になれる日！自信を持って。", "🦁 アクセサリー"],
+    "乙女座": ["整理整頓で運気UP。", "📘 手帳"],
+    "天秤座": ["バランス感覚が大事。", "⚖️ 時計"],
+    "蠍座": ["集中力が最強。やり切ろう。", "🖊️ ペン"],
+    "射手座": ["新しい挑戦が◎。", "🎒 バッグ"],
+    "山羊座": ["努力が報われる日。", "📊 ノート"],
+    "水瓶座": ["アイデアが光る。", "💡 メモ"],
+    "魚座": ["直感を信じてOK。", "🎧 イヤホン"]
+  };
+
+  const resultDiv = document.getElementById("result");
+
+  function drawFortune() {
+    const birthday = document.getElementById("birthday").value;
+    if (!birthday) {
+      alert("誕生日を入力してね！");
+      return;
     }
 
-    .card {
-      background: white;
-      width: 320px;
-      margin: auto;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
+    const sign = getZodiac(new Date(birthday));
+    const fortune = fortunes[sign];
 
-    h1 {
-      margin-bottom: 15px;
-    }
+    showResult(sign, fortune[0], fortune[1]);
+  }
 
-    input {
-      padding: 8px;
-      font-size: 16px;
-      width: 80%;
-    }
+  function showResult(sign, message, item) {
+    resultDiv.innerHTML = `
+      <div class="fortune">${sign}</div>
+      <p>${message}</p>
+      <p>🎁 ラッキーアイテム：${item}</p>
+    `;
+  }
 
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+  function getZodiac(date) {
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
 
-    button:disabled {
-      background: gray;
-    }
-
-    .result {
-      margin-top: 20px;
-    }
-
-    .fortune {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="card">
-    <h1>🌟 星座占い</h1>
-    <p>誕生日を入力してね</p>
-    <input type="date" id="birthday">
-    <br>
-    <button id="btn" onclick="drawFortune()">占う</button>
-
-    <div class="result" id="result"></div>
-  </div>
-
-  <script>
-    const fortunes = {
-      "牡羊座": ["勢いのある一日！挑戦が吉。", "🔥 赤いもの"],
-      "牡牛座": ["安定がカギ。無理しないで。", "🍰 甘いもの"],
-      "双子座": ["会話が運を運ぶ日。", "📱 スマホ"],
-      "蟹座": ["身近な人を大切に。", "🏠 家の鍵"],
-      "獅子座": ["主役になれる日！自信を持って。", "🦁 アクセサリー"],
-      "乙女座": ["整理整頓で運気UP。", "📘 手帳"],
-      "天秤座": ["バランス感覚が大事。", "⚖️ 時計"],
-      "蠍座": ["集中力が最強。やり切ろう。", "🖊️ ペン"],
-      "射手座": ["新しい挑戦が◎。", "🎒 バッグ"],
-      "山羊座": ["努力が報われる日。", "📊 ノート"],
-      "水瓶座": ["アイデアが光る。", "💡 メモ"],
-      "魚座": ["直感を信じてOK。", "🎧 イヤホン"]
-    };
-
-    const btn = document.getElementById("btn");
-    const resultDiv = document.getElementById("result");
-
-    const today = new Date().toDateString();
-    const saved = localStorage.getItem("zodiacFortune");
-
-    if (saved) {
-      const data = JSON.parse(saved);
-      if (data.date === today) {
-        showResult(data.sign, data.message, data.item);
-        btn.disabled = true;
-        btn.textContent = "今日はもう占いました";
-      }
-    }
-
-    function drawFortune() {
-      const birthday = document.getElementById("birthday").value;
-      if (!birthday) {
-        alert("誕生日を入力してね！");
-        return;
-      }
-
-      const sign = getZodiac(new Date(birthday));
-      const fortune = fortunes[sign];
-
-      const data = {
-        date: today,
-        sign: sign,
-        message: fortune[0],
-        item: fortune[1]
-      };
-
-    }
-
-    function showResult(sign, message, item) {
-      resultDiv.innerHTML = `
-        <div class="fortune">${sign}</div>
-        <p>${message}</p>
-        <p>🎁 ラッキーアイテム：${item}</p>
-      `;
-    }
-
-    function getZodiac(date) {
-      const m = date.getMonth() + 1;
-      const d = date.getDate();
-
-      if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return "牡羊座";
-      if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return "牡牛座";
-      if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return "双子座";
-      if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return "蟹座";
-      if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return "獅子座";
-      if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return "乙女座";
-      if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return "天秤座";
-      if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return "蠍座";
-      if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return "射手座";
-      if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return "山羊座";
-      if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return "水瓶座";
-      return "魚座";
-    }
-  </script>
-
-</body>
-</html>
+    if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return "牡羊座";
+    if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return "牡牛座";
+    if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return "双子座";
+    if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return "蟹座";
+    if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return "獅子座";
+    if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return "乙女座";
+    if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return "天秤座";
+    if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return "蠍座";
+    if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return "射手座";
+    if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return "山羊座";
+    if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return "水瓶座";
+    return "魚座";
+  }
+</script>
