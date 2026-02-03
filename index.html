@@ -1,57 +1,22 @@
-<script>
-  const fortunes = {
-    "牡羊座": ["勢いのある一日！挑戦が吉。", "🔥 赤いもの"],
-    "牡牛座": ["安定がカギ。無理しないで。", "🍰 甘いもの"],
-    "双子座": ["会話が運を運ぶ日。", "📱 スマホ"],
-    "蟹座": ["身近な人を大切に。", "🏠 家の鍵"],
-    "獅子座": ["主役になれる日！自信を持って。", "🦁 アクセサリー"],
-    "乙女座": ["整理整頓で運気UP。", "📘 手帳"],
-    "天秤座": ["バランス感覚が大事。", "⚖️ 時計"],
-    "蠍座": ["集中力が最強。やり切ろう。", "🖊️ ペン"],
-    "射手座": ["新しい挑戦が◎。", "🎒 バッグ"],
-    "山羊座": ["努力が報われる日。", "📊 ノート"],
-    "水瓶座": ["アイデアが光る。", "💡 メモ"],
-    "魚座": ["直感を信じてOK。", "🎧 イヤホン"]
-  };
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>星座占い</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  const resultDiv = document.getElementById("result");
+  <div class="card">
+    <h1>🌟 星座占い</h1>
+    <p>誕生日を入力してね</p>
 
-  function drawFortune() {
-    const birthday = document.getElementById("birthday").value;
-    if (!birthday) {
-      alert("誕生日を入力してね！");
-      return;
-    }
+    <input type="date" id="birthday">
+    <button onclick="drawFortune()">占う</button>
 
-    const sign = getZodiac(new Date(birthday));
-    const fortune = fortunes[sign];
+    <div id="result"></div>
+  </div>
 
-    showResult(sign, fortune[0], fortune[1]);
-  }
-
-  function showResult(sign, message, item) {
-    resultDiv.innerHTML = `
-      <div class="fortune">${sign}</div>
-      <p>${message}</p>
-      <p>🎁 ラッキーアイテム：${item}</p>
-    `;
-  }
-
-  function getZodiac(date) {
-    const m = date.getMonth() + 1;
-    const d = date.getDate();
-
-    if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return "牡羊座";
-    if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return "牡牛座";
-    if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return "双子座";
-    if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return "蟹座";
-    if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return "獅子座";
-    if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return "乙女座";
-    if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return "天秤座";
-    if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return "蠍座";
-    if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return "射手座";
-    if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return "山羊座";
-    if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return "水瓶座";
-    return "魚座";
-  }
-</script>
+  <script src="script.js"></script>
+</body>
+</html>
