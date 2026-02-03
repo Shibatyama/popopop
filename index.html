@@ -115,11 +115,6 @@
         item: fortune[1]
       };
 
-      localStorage.setItem("zodiacFortune", JSON.stringify(data));
-      showResult(sign, fortune[0], fortune[1]);
-
-      btn.disabled = true;
-      btn.textContent = "今日はもう占いました";
     }
 
     function showResult(sign, message, item) {
