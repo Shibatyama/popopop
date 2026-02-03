@@ -2,102 +2,103 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>モグラたたきゲーム</title>
+  <title>今日の運勢占い</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
       text-align: center;
-      background: #f0f0f0;
+      padding-top: 60px;
+      color: #333;
+    }
+
+    .card {
+      background: white;
+      width: 300px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
     h1 {
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
-    #score {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .field {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .hole {
-      width: 100px;
-      height: 100px;
-      background: #8b5a2b;
-      border-radius: 50%;
-      position: relative;
+    button {
+      background: #ff7a7a;
+      border: none;
+      color: white;
+      font-size: 16px;
+      padding: 12px 20px;
+      border-radius: 8px;
       cursor: pointer;
+      margin-top: 15px;
     }
 
-    .mole {
-      width: 80px;
-      height: 80px;
-      background: brown;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      display: none;
+    button:hover {
+      background: #ff5252;
     }
 
-    .mole::after {
-      content: "🐹";
-      font-size: 50px;
-      position: absolute;
-      top: 10px;
-      left: 15px;
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .fortune {
+      font-size: 28px;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
 
-  <h1>モグラたたき 🐹</h1>
-  <div id="score">スコア: 0</div>
+  <div class="card">
+    <h1>🔮 今日の運勢</h1>
+    <button onclick="drawFortune()">占う</button>
 
-  <div class="field">
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
-    <div class="hole"><div class="mole"></div></div>
+    <div class="result" id="result"></div>
   </div>
 
   <script>
-    const moles = document.querySelectorAll(".mole");
-    const scoreDisplay = document.getElementById("score");
-    let score = 0;
+    const fortunes = [
+      {
+        name: "大吉",
+        message: "最高の一日！新しいことに挑戦しよう。",
+        item: "⭐ キーホルダー"
+      },
+      {
+        name: "中吉",
+        message: "努力が実りやすい日。コツコツが吉。",
+        item: "📘 ノート"
+      },
+      {
+        name: "小吉",
+        message: "穏やかな一日。周りへの感謝を忘れずに。",
+        item: "☕ コーヒー"
+      },
+      {
+        name: "吉",
+        message: "良い流れ。人との会話が運を呼ぶ。",
+        item: "📱 スマホ"
+      },
+      {
+        name: "凶",
+        message: "慎重に行動しよう。焦りはNG。",
+        item: "🍀 お守り"
+      }
+    ];
 
-    function showMole() {
-      moles.forEach(mole => mole.style.display = "none");
+    function drawFortune() {
+      const random = Math.floor(Math.random() * fortunes.length);
+      const fortune = fortunes[random];
 
-      const random = Math.floor(Math.random() * moles.length);
-      moles[random].style.display = "block";
-
-      setTimeout(() => {
-        moles[random].style.display = "none";
-      }, 800);
+      document.getElementById("result").innerHTML = `
+        <div class="fortune">${fortune.name}</div>
+        <p>${fortune.message}</p>
+        <p>🎁 ラッキーアイテム：${fortune.item}</p>
+      `;
     }
-
-    moles.forEach(mole => {
-      mole.addEventListener("click", () => {
-        score++;
-        scoreDisplay.textContent = "スコア: " + score;
-        mole.style.display = "none";
-      });
-    });
-
-    setInterval(showMole, 1000);
   </script>
 
 </body>
