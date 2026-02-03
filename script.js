@@ -1,31 +1,21 @@
 const fortunes = {
-  "牡羊座": {
-    color: "#ff7675",
-    love: ["情熱的な展開！", "素直さがカギ"],
-    work: ["挑戦が評価される", "行動力◎"],
-    money: ["出費に注意", "自己投資は吉"]
-  },
-  "牡牛座": {
-    color: "#55efc4",
-    love: ["安定した関係", "信頼が深まる"],
-    work: ["堅実さが評価", "丁寧さ◎"],
-    money: ["貯金日和", "無駄遣いNG"]
-  },
-  "双子座": {
-    color: "#74b9ff",
-    love: ["会話が恋を呼ぶ", "軽やかさ吉"],
-    work: ["情報収集が武器", "連絡忘れ注意"],
-    money: ["臨時収入の予感", "衝動買い注意"]
-  }
-  // 👉 他の星座も同じ形式で追加できる
+  "牡羊座": { color:"#ff7675", love:["情熱的な展開！","素直さがカギ"], work:["挑戦が評価される","行動力◎"], money:["出費に注意","自己投資は吉"] },
+  "牡牛座": { color:"#55efc4", love:["安定した関係","信頼が深まる"], work:["堅実さが評価","丁寧さ◎"], money:["貯金日和","無駄遣いNG"] },
+  "双子座": { color:"#74b9ff", love:["会話が恋を呼ぶ","軽やかさ吉"], work:["情報収集が武器","連絡忘れ注意"], money:["臨時収入の予感","衝動買い注意"] },
+  "蟹座": { color:"#a29bfe", love:["家庭運良好","優しさが吉"], work:["協力が鍵","助け合い◎"], money:["出費は控えめに","貯蓄チャンス"] },
+  "獅子座": { color:"#fdcb6e", love:["注目される日","リーダーシップ吉"], work:["主導権を握る","発言力◎"], money:["交際費注意","投資は吉"] },
+  "乙女座": { color:"#81ecec", love:["細やかな気配りが吉","整理整頓が愛を呼ぶ"], work:["計画性◎","書類整理吉"], money:["節約運◎","貯金日和"] },
+  "天秤座": { color:"#fab1a0", love:["バランス良好","相手と歩調を合わせよう"], work:["交渉運良し","協調が吉"], money:["買い物運◎","浪費注意"] },
+  "蠍座": { color:"#e17055", love:["深い愛情","直感が吉"], work:["集中力◎","分析力が評価"], money:["秘密の貯金吉","出費注意"] },
+  "射手座": { color:"#00b894", love:["冒険心が恋を呼ぶ","軽やかさ吉"], work:["新しい挑戦吉","発想力◎"], money:["旅行費用吉","無駄遣い注意"] },
+  "山羊座": { color:"#636e72", love:["真面目な愛情吉","信頼関係重視"], work:["努力が報われる","責任感◎"], money:["貯蓄運◎","堅実投資吉"] },
+  "水瓶座": { color:"#0984e3", love:["自由な発想で吉","ユニークさが魅力"], work:["アイデアが光る","独創性◎"], money:["節約より投資吉","臨時収入◎"] },
+  "魚座": { color:"#6c5ce7", love:["直感が恋を呼ぶ","優しさが吉"], work:["柔軟性◎","サポート役吉"], money:["貯金チャンス","浪費注意"] }
 };
 
 function drawFortune() {
   const birthday = document.getElementById("birthday").value;
-  if (!birthday) {
-    alert("誕生日を入力してね！");
-    return;
-  }
+  if (!birthday) { alert("誕生日を入力してね！"); return; }
 
   const sign = getZodiac(new Date(birthday));
   const data = fortunes[sign];
@@ -39,7 +29,6 @@ function drawFortune() {
 
   document.getElementById("result").innerHTML = `
     <div class="sign" style="color:${data.color}">${sign}</div>
-
     <div class="section">❤️ 恋愛運：${love}</div>
     <div class="section">💼 仕事運：${work}</div>
     <div class="section">💰 金運：${money}</div>
@@ -54,16 +43,16 @@ function getZodiac(date) {
   const m = date.getMonth() + 1;
   const d = date.getDate();
 
-  if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return "牡羊座";
-  if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return "牡牛座";
-  if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return "双子座";
-  if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return "蟹座";
-  if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return "獅子座";
-  if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return "乙女座";
-  if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return "天秤座";
-  if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return "蠍座";
-  if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return "射手座";
-  if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return "山羊座";
-  if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return "水瓶座";
+  if ((m===3 && d>=21) || (m===4 && d<=19)) return "牡羊座";
+  if ((m===4 && d>=20) || (m===5 && d<=20)) return "牡牛座";
+  if ((m===5 && d>=21) || (m===6 && d<=21)) return "双子座";
+  if ((m===6 && d>=22) || (m===7 && d<=22)) return "蟹座";
+  if ((m===7 && d>=23) || (m===8 && d<=22)) return "獅子座";
+  if ((m===8 && d>=23) || (m===9 && d<=22)) return "乙女座";
+  if ((m===9 && d>=23) || (m===10 && d<=23)) return "天秤座";
+  if ((m===10 && d>=24) || (m===11 && d<=22)) return "蠍座";
+  if ((m===11 && d>=23) || (m===12 && d<=21)) return "射手座";
+  if ((m===12 && d>=22) || (m===1 && d<=19)) return "山羊座";
+  if ((m===1 && d>=20) || (m===2 && d<=18)) return "水瓶座";
   return "魚座";
 }
