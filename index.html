@@ -1,15 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>My First Page</title>
-  <link rel="stylesheet" href="style.css">
+  <title>モグラたたきゲーム</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #score {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .hole {
+      width: 100px;
+      height: 100px;
+      background: #8b5a2b;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .mole {
+      width: 80px;
+      height: 80px;
+      background: brown;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: none;
+    }
+
+    .mole::after {
+      content: "🐹";
+      font-size: 50px;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+    }
+  </style>
 </head>
 <body>
 
-  <h1 id="title">Hello World</h1>
-  <button id="btn">Do you have the courage to press this button? </button>
+  <h1>モグラたたき 🐹</h1>
+  <div id="score">スコア: 0</div>
 
-  <script src="script.js"></script>
+  <div class="field">
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+  </div>
+
+  <script>
+    const moles = document.querySelectorAll(".mole");
+    const scoreDisplay = document.getElementById("score");
+    let score = 0;
+
+    function showMole() {
+      moles.forEach(mole => mole.style.display = "none");
+
+      const random = Math.floor(Math.random() * moles.length);
+      moles[random].style.display = "block";
+
+      setTimeout(() => {
+        moles[random].style.display = "none";
+      }, 800);
+    }
+
+    moles.forEach(mole => {
+      mole.addEventListener("click", () => {
+        score++;
+        scoreDisplay.textContent = "スコア: " + score;
+        mole.style.display = "none";
+      });
+    });
+
+    setInterval(showMole, 1000);
+  </script>
+
 </body>
 </html>
