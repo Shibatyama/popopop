@@ -26,6 +26,7 @@ function drawFortune() {
 
   const card = document.querySelector(".card");
   card.style.border = `4px solid ${data.color}`;
+  card.style.boxShadow = `0 15px 35px ${data.color}88`; // カラーハイライト
 
   document.getElementById("result").innerHTML = `
     <div class="sign" style="color:${data.color}">${sign}</div>
@@ -33,6 +34,8 @@ function drawFortune() {
     <div class="section">💼 仕事運：${work}</div>
     <div class="section">💰 金運：${money}</div>
   `;
+
+  addStars(5); // 星を5個ランダムに追加
 }
 
 function randomPick(array) {
@@ -42,7 +45,6 @@ function randomPick(array) {
 function getZodiac(date) {
   const m = date.getMonth() + 1;
   const d = date.getDate();
-
   if ((m===3 && d>=21) || (m===4 && d<=19)) return "牡羊座";
   if ((m===4 && d>=20) || (m===5 && d<=20)) return "牡牛座";
   if ((m===5 && d>=21) || (m===6 && d<=21)) return "双子座";
@@ -55,4 +57,27 @@ function getZodiac(date) {
   if ((m===12 && d>=22) || (m===1 && d<=19)) return "山羊座";
   if ((m===1 && d>=20) || (m===2 && d<=18)) return "水瓶座";
   return "魚座";
+}
+
+// 星アニメ追加
+function addStars(count) {
+  const card = document.querySelector(".card");
+  for (let i=0; i<count; i++) {
+    const star = document.createElement("div");
+    star.textContent = "⭐";
+    star.style.position = "absolute";
+    star.style.left = `${Math.random()*90}%`;
+    star.style.top = `${Math.random()*90}%`;
+    star.style.fontSize = `${10 + Math.random()*20}px`;
+    star.style.opacity = 0;
+    star.style.transition = "all 1s ease-out";
+    card.appendChild(star);
+
+    setTimeout(() => { 
+      star.style.opacity = 1;
+      star.style.top = `${Math.random()*50}%`;
+    }, 50);
+
+    setTimeout(() => { card.removeChild(star); }, 1500);
+  }
 }
